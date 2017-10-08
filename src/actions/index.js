@@ -2,7 +2,7 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {AUTH_USER, UNAUTH_USER, GET_POLLS, GET_POLL, VOTE_POLL, ANON_USER, ERROR, USER_POLLS} from './types';
-const ROOT_URL = 'http://localhost:3091'; //3090
+const ROOT_URL = 'https://pacific-scrubland-65914.herokuapp.com'; //3090
 
 export function signinUser({email, password}) {
   const userEmail = {email, password}.email;
