@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions'
+import styled from 'styled-components';
 
+const SubmitButton = styled.button`
+  width: 100px;
+  height: 50px;
+  background-color: red;
+  color: white;
+  border-style: none;
+
+  &: hover{
+    background-color: maroon;
+    color: #ddd;
+  }
+`
 class Signup extends Component {
   constructor() {
     super();
@@ -29,7 +42,6 @@ class Signup extends Component {
   }
 
   render() {
-    console.log("rendering");
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
@@ -39,6 +51,7 @@ class Signup extends Component {
             value={this.state.email}
             onChange={this.handleEmailChange}
             />
+            <br></br>
           <input
             type="password"
             placeholder="password"
@@ -46,7 +59,7 @@ class Signup extends Component {
             onChange={this.handlePasswordChange}
             />
         </label>
-        <button> Sign up</button>
+        <SubmitButton> Sign up</SubmitButton>
       </form>
     )
   }
