@@ -2,7 +2,14 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {AUTH_USER, UNAUTH_USER, GET_POLLS, GET_POLL, VOTE_POLL, ANON_USER, ERROR, USER_POLLS} from './types';
+var twitterAPI = require('node-twitter-api');
+
 const ROOT_URL = 'https://pacific-scrubland-65914.herokuapp.com'; //3090
+var twitter = new twitterAPI({
+  consumerKey: 'dEr2AkrDLJSdDZfjqiLAzFkRz',
+  consumerSecret: 'JI7E8cfjSWNdKFFEoX1lMLoJB3ENdxQz1VpXfg6gbLQnfx8HVT',
+  callback: 'https://jsfccpoll.herokuapp.com/home'
+});
 
 export function signinUser({email, password}) {
   const userEmail = {email, password}.email;
@@ -20,16 +27,7 @@ export function signinUser({email, password}) {
       }
 }
 export function signinUserTwitter(){
-  return function(dispatch){
-    axios.get(`${ROOT_URL}/twitter`).then(response => {
-      dispatch({type: AUTH_USER, payload: 'twitter@email.com'});
-      localStorage.setItem('token', response.data.token);
-
-      browserHistory.push('/');
-    }).catch((error)=> {
-      console.log(error);
-    });
-  }
+  console.log("signinUserTwitter invalidated");
 }
 export function signupUser({email, password}) {
   const userEmail = {email, password}.email;
@@ -60,15 +58,11 @@ export function signoutUser(){
   return {type: UNAUTH_USER};
 }
 export function twitterSignIn(){
-  console.log("Signing in with twitter!");
-  var twitterToken = axios.post('https://api.twitter.com/oauth/request_token', {headers:{oauth_callback: 'https://jsfccpoll.herokuapp.com/'}}).then(response => {
-    if (response.data.oauth_callback_confirmed){
-      console.log("Success! Got twitter token");
-      console.log(response.data);
-      return response;
-    }else{
-      console.log("uh oh, something went wrong");
-      return null;
+  twitter.getRequestToken(function(error, requestToken, requestTokenSecret, results){
+    if (error) {
+      console.log("Error getting OAuth request token: " + error);
+    } else {
+      console.log("Success, finally!", requestToken, requestTokenSecret, results);
     }
   });
   return {type: AUTH_USER, payload: null};
