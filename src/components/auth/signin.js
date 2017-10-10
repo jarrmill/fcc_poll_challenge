@@ -25,28 +25,33 @@ class Signin extends Component {
     this.props.signinUser({email, password});
     alert(`Signing up under email: ${this.state.email}`);
   }
-
+  handleTwitterLogin = () => {
+    this.props.twitterSignIn();
+  }
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div><label>
-          <input
-            type="text"
-            placeholder="email"
-            value={this.state.email}
-            onChange={this.handleFirstNameChange}
-            />
-        </label></div>
-        <div><label>
-          <input
-            type="password"
-            placeholder="email"
-            value={this.state.password}
-            onChange={this.handlePasswordChange}
-            />
-        </label></div>
-        <button> Sign in</button>
-      </form>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <div><label>
+            <input
+              type="text"
+              placeholder="email"
+              value={this.state.email}
+              onChange={this.handleFirstNameChange}
+              />
+          </label></div>
+          <div><label>
+            <input
+              type="password"
+              placeholder="email"
+              value={this.state.password}
+              onChange={this.handlePasswordChange}
+              />
+          </label></div>
+          <button> Sign in</button>
+        </form>
+        <button onClick={() => this.handleTwitterLogin()}>Sign in with Twitter!</button>
+      </div>
     )
   }
 }

@@ -19,6 +19,18 @@ export function signinUser({email, password}) {
          });
       }
 }
+export function signinUserTwitter(){
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/twitter`).then(response => {
+      dispatch({type: AUTH_USER, payload: 'twitter@email.com'});
+      localStorage.setItem('token', response.data.token);
+
+      browserHistory.push('/');
+    }).catch((error)=> {
+      console.log(error);
+    });
+  }
+}
 export function signupUser({email, password}) {
   const userEmail = {email, password}.email;
   //Submit email/password to the server
@@ -47,7 +59,20 @@ export function signoutUser(){
   localStorage.removeItem('token');
   return {type: UNAUTH_USER};
 }
-
+export function twitterSignIn(){
+  console.log("Signing in with twitter!");
+  var twitterToken = axios.post('https://api.twitter.com/oauth/request_token', {headers:{oauth_callback: 'https://jsfccpoll.herokuapp.com/'}}).then(response => {
+    if (response.data.oauth_callback_confirmed){
+      console.log("Success! Got twitter token");
+      console.log(response.data);
+      return response;
+    }else{
+      console.log("uh oh, something went wrong");
+      return null;
+    }
+  });
+  return {type: AUTH_USER, payload: null};
+}
 //vote //
 export function vote(pollId, vote, userEmail, voter_list){
   return function(dispatch){
