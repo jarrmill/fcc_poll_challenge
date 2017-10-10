@@ -51,6 +51,7 @@ class Signin extends Component {
           <button> Sign in</button>
         </form>
         <button onClick={() => this.handleTwitterLogin()}>Sign in with Twitter!</button>
+        <button>Remove me</button>
       </div>
     )
   }
