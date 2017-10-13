@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 
-import {AUTH_USER, UNAUTH_USER, GET_POLLS, GET_POLL, VOTE_POLL, ANON_USER, ERROR, USER_POLLS} from './types';
+import {AUTH_USER, UNAUTH_USER, GET_POLLS, GET_POLL, VOTE_POLL, ANON_USER, ERROR, USER_POLLS, DELETE_POLL} from './types';
 var twitterAPI = require('node-twitter-api');
 
 const ROOT_URL = 'https://pacific-scrubland-65914.herokuapp.com'; //3090
@@ -25,9 +25,6 @@ export function signinUser({email, password}) {
            console.log(error);
          });
       }
-}
-export function signinUserTwitter(){
-  console.log("signinUserTwitter invalidated");
 }
 export function signupUser({email, password}) {
   const userEmail = {email, password}.email;
@@ -57,16 +54,6 @@ export function signoutUser(){
   localStorage.removeItem('token');
   return {type: UNAUTH_USER};
 }
-export function twitterSignIn(){
-  twitter.getRequestToken(function(error, requestToken, requestTokenSecret, results){
-    if (error) {
-      console.log("Error getting OAuth request token: " + error);
-    } else {
-      console.log("Success, finally!", requestToken, requestTokenSecret, results);
-    }
-  });
-  return {type: AUTH_USER, payload: null};
-}
 //vote //
 export function vote(pollId, vote, userEmail, voter_list){
   return function(dispatch){
@@ -85,6 +72,12 @@ export function vote(pollId, vote, userEmail, voter_list){
     })
     // return {type: VOTE_POLL, payload: poll}; /*{newPoll: poll, foo: randNum}*/
   }
+}
+export function deletePoll(pollId){
+  var polls = axios.post(`${ROOT_URL}/deletepoll`, {id: pollId}).then(response => {
+    return response.data;
+  }).catch((error) => { console.error(error);});
+  return {type: DELETE_POLL, payload: polls};
 }
 export function getSpecificPoll(id){
   var poll = axios.get(`${ROOT_URL}/findpoll`, {headers:{id:id}}).then(response => {

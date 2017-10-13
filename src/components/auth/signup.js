@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions'
 import styled from 'styled-components';
+import {FormContainer, FormInput, DaForm, DaDiv, DaLogo} from '../styled/forms.js';
+import {FormTitle, FormButton, FormIcon, FormRow} from '../styled/forms.js';
+import {DivTitle, DivRow, DivIcon, DivText} from '../styled/forms.js';
 
 const SubmitButton = styled.button`
   width: 100px;
@@ -43,24 +46,47 @@ class Signup extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          <input
-            type="text"
-            placeholder="Enter your email"
-            value={this.state.email}
-            onChange={this.handleEmailChange}
-            />
-            <br></br>
-          <input
-            type="password"
-            placeholder="password"
-            value={this.state.password}
-            onChange={this.handlePasswordChange}
-            />
-        </label>
-        <SubmitButton> Sign up</SubmitButton>
-      </form>
+      <FormContainer>
+        <DaForm onSubmit={this.handleSubmit}>
+          <DaLogo src={require('../../assets/img/magic_boi.png')}/>
+          <FormTitle> Sign Up</FormTitle>
+            <FormRow>
+              <FormIcon><span className="fa fa-user-circle"></span></FormIcon>
+              <FormInput
+                type="text"
+                placeholder="Enter your email"
+                value={this.state.email}
+                onChange={this.handleEmailChange}
+                />
+            </FormRow>
+            <FormRow>
+              <FormIcon><span className="fa fa-key"></span></FormIcon>
+              <FormInput
+                type="password"
+                placeholder="Password"
+                value={this.state.password}
+                onChange={this.handlePasswordChange}
+                />
+            </FormRow>
+          <FormButton> Sign up</FormButton>
+        </DaForm>
+        {/* sepator for different divs blah blah blah blah blah */}
+        <DaDiv>
+          <DivTitle>Why Vote Magic?</DivTitle>
+          <DivRow>
+           <DivIcon><span className="fa fa-clock-o" ></span></DivIcon>
+           <DivText>Quick Quick Quick!</DivText>
+          </DivRow>
+          <DivRow>
+            <DivIcon><span className="fa fa-users"></span></DivIcon>
+            <DivText>Share with your friends!</DivText>
+          </DivRow>
+          <DivRow>
+            <DivIcon><span className="fa fa-lock"></span></DivIcon>
+            <DivText>So obscure no one will ever hack us!</DivText>
+          </DivRow>
+        </DaDiv>
+      </FormContainer>
     )
   }
 }

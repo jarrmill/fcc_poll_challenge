@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../actions'
+import {FormContainer, FormInput, DaForm, DaDiv} from '../styled/forms.js';
+import {FormTitle, FormButton, FormIcon, FormRow} from '../styled/forms.js';
+import {DivRow, DivIcon, DivText, DaLogo} from '../styled/forms.js';
+import * as actions from '../../actions';
+import '../../assets/font-awesome/css/font-awesome.css'
 
 class Signin extends Component {
   constructor() {
@@ -25,34 +29,37 @@ class Signin extends Component {
     this.props.signinUser({email, password});
     alert(`Signing up under email: ${this.state.email}`);
   }
-  handleTwitterLogin = () => {
-    this.props.twitterSignIn();
-  }
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <div><label>
-            <input
-              type="text"
-              placeholder="email"
-              value={this.state.email}
-              onChange={this.handleFirstNameChange}
-              />
-          </label></div>
-          <div><label>
-            <input
-              type="password"
-              placeholder="email"
-              value={this.state.password}
-              onChange={this.handlePasswordChange}
-              />
-          </label></div>
-          <button> Sign in</button>
-        </form>
-        <button onClick={() => this.handleTwitterLogin()}>Sign in with Twitter!</button>
-        <button>Remove me</button>
-      </div>
+      <FormContainer>
+        <DaForm onSubmit={this.handleSubmit}>
+          <DaLogo src={require('../../assets/img/magic_boi.png')}/>
+          <FormTitle>Sign In</FormTitle>
+          <FormRow>
+            <label>
+              <FormIcon><span className="fa fa-user-circle"></span></FormIcon>
+              <FormInput
+                type="text"
+                placeholder="email"
+                value={this.state.email}
+                onChange={this.handleFirstNameChange}
+                />
+            </label>
+          </FormRow>
+          <FormRow>
+            <label>
+              <FormIcon><span className="fa fa-key"></span></FormIcon>
+              <FormInput
+                type="password"
+                placeholder="password"
+                value={this.state.password}
+                onChange={this.handlePasswordChange}
+                />
+              </label>
+          </FormRow>
+          <FormButton> Sign in</FormButton>
+        </DaForm>
+      </FormContainer>
     )
   }
 }
