@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import {MainContainer, PollDiv, PollBody, PollTitle, MainDisplay, PollsContainer} from './styled/user_polls.js';
+import {PollButton, PollContainer} from './styled/user_polls.js'
 import _ from 'lodash';
 import {Doughnut} from 'react-chartjs-2';
 
@@ -10,8 +11,9 @@ class PersonalPollList extends Component {
     super(props);
     this.state = { title: '', data: [], display: 'none'};
   }
-  deletePoll(id){
-    //add action statement here
+  deletePoll(id, title){
+    this.props.deletePoll(id);
+    this.props.getUserPolls(this.props.email);
   }
   renderFocusPoll(){
     var title = this.state.title;
@@ -44,8 +46,10 @@ class PersonalPollList extends Component {
     var options = {}
     //maintainAspectRatio: false
     return (<MainDisplay>
-        <h1>{this.state.title}</h1>
-        <Doughnut data={data} options={options}/>
+        <PollContainer>
+          <PollTitle>{this.state.title}</PollTitle>
+          <Doughnut data={data} options={options}/>
+        </PollContainer>
       </MainDisplay>);
   }
   renderList(){
@@ -74,14 +78,13 @@ class PersonalPollList extends Component {
           <PollBody onClick={() => this.selectPoll(poll.title, data)}>
             <Doughnut data={data} options={options}/>
             <PollTitle>{poll.title}</PollTitle>
-            <button onClick={() => this.deletePoll(poll._id)}>DeletePoll</button>
+            <PollButton onClick={() => this.deletePoll(poll._id, poll.title)}>DeletePoll</PollButton>
           </PollBody>
         </PollDiv>);
     });
   }
   selectPoll(title, data){
     this.setState({title: title, data: data, display: '0px'});
-    console.log("setting state to: ", this.state)
   }
   componentWillMount(){
     //this.props.getPolls();
@@ -90,7 +93,7 @@ class PersonalPollList extends Component {
   render() {
     return (
       <MainContainer>
-        {this.renderFocusPoll()}
+          {this.renderFocusPoll()}
         <PollsContainer>
           {this.renderList()}
         </PollsContainer>

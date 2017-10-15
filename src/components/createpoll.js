@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as actions from '../actions';
-
+import {FormContainer, MainForm, TitleInput, EntryInput, EntryRow} from './styled/style_create_form.js';
+import {RemoveButton, DaButton, ButtonRow, TitleTitle} from './styled/style_create_form.js';
 class CreatePoll extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +21,7 @@ class CreatePoll extends Component {
   }
 
   handleSubmit = (event) => {
+    console.log("handling submit");
    var email = (this.props.auth.email) ? this.props.auth.email : " ";
    var value = this.state.value.slice();
    var options = [];
@@ -53,22 +55,27 @@ class CreatePoll extends Component {
   renderForm(){
     let uiItems = [];
     for(let i = 0; i < this.state.count; i++){
-      uiItems.push(<div key={i}>
-          <input type="text" value={this.state.value[i] || ''} onChange={this.handleChange.bind(this, i)} />
-          <input type="button" value='remove' onClick={this.removeClick.bind(this, i)}/>
-        </div>
+      uiItems.push(<EntryRow key={i}>
+          <EntryInput type="text" value={this.state.value[i] || ''} onChange={this.handleChange.bind(this, i)} />
+          <RemoveButton type="button" value='-' onClick={this.removeClick.bind(this, i)}/>
+        </EntryRow>
       )
     }
     return uiItems || null
   }
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="Poll Name" onChange={this.handleTitleChange} />
-        {this.renderForm()}
-        <input type='button' value='add more' onClick={this.addClick.bind(this)}/>
-        <input type="submit" value="Submit" />
-      </form>
+      <FormContainer>
+        <MainForm onSubmit={this.handleSubmit}>
+          <TitleTitle>Create a New Poll</TitleTitle>
+          <TitleInput type="text" placeholder="Poll Name" onChange={this.handleTitleChange} />
+          {this.renderForm()}
+          <ButtonRow>
+            <DaButton type='button' value='add more' onClick={this.addClick.bind(this)}/>
+            <DaButton type="submit" value="Submit" />
+          </ButtonRow>
+        </MainForm>
+      </FormContainer>
     )
   }
 }

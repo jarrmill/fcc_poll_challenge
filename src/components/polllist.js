@@ -14,7 +14,7 @@ const PollItem = styled.li`
   align-items: center;
   margin-bottom: 5px;
   padding-left: 5px;
-  height: 50px;
+  height: 70px;
   width: 100%;
   &: hover {
     text-decoration:none;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 
-import {AUTH_USER, UNAUTH_USER, GET_POLLS, GET_POLL, VOTE_POLL, ANON_USER, ERROR, USER_POLLS, DELETE_POLL} from './types';
+import {AUTH_USER, UNAUTH_USER, GET_POLLS, GET_POLL, CREATE_POLL, VOTE_POLL, ANON_USER, ERROR, USER_POLLS, DELETE_POLL} from './types';
 var twitterAPI = require('node-twitter-api');
 
 const ROOT_URL = 'https://pacific-scrubland-65914.herokuapp.com'; //3090
@@ -75,6 +75,7 @@ export function vote(pollId, vote, userEmail, voter_list){
 }
 export function deletePoll(pollId){
   var polls = axios.post(`${ROOT_URL}/deletepoll`, {id: pollId}).then(response => {
+    console.log("Delete Response is: ", response.data);
     return response.data;
   }).catch((error) => { console.error(error);});
   return {type: DELETE_POLL, payload: polls};
@@ -102,9 +103,12 @@ export function getUserPolls(email){
   return {type: USER_POLLS, payload: polls};
 }
 export function createPoll(newPoll){
+  console.log("attempting to create poll");
   axios.post(`${ROOT_URL}/createpoll`, newPoll).then(response => {
-    console.log(response);
+    console.log("Poll created: ", response);
+    browserHistory.push('/home');
   }).catch(error => {
     console.error(error);
-  })
+  });
+  return {type: CREATE_POLL}
 }

@@ -22,7 +22,6 @@ const Hul = styled.ul`
 const Hli = styled.li`
   display: block;
   font-family: sans-serif;
-  font-size: 1.2em;
   line-height: 40px;
   height: 40px;
   border-bottom: 1px solid #888;
@@ -36,6 +35,7 @@ const Hli = styled.li`
     display: inline-block;
     margin-right: -4px;
   }
+
 `
 const HLink = styled(Link)`
   text-decoration: none;

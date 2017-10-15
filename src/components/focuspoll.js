@@ -4,13 +4,16 @@ import * as actions from '../actions';
 import _ from 'lodash';
 import styled from "styled-components"
 import {Doughnut} from 'react-chartjs-2';
+import grid from '../assets/img/grid.png';
 
 const DaFocusPoll = styled.ul`
   display: flex;
   flex-direction: column;
   margin: 5px;
+  padding: 10px;
+  height: 90%;
   width: 90%;
-  background-color: #eee;
+  background-image: url(${grid});
   justify-content: center;
   align-items: center;
 

@@ -79,7 +79,6 @@ export const FormInput = styled.input`
   margin-top: 5px;
   margin-bottom:0px;
   padding-left: 5px;
-  font-size: 120%;
 
   &: focus{
     border-style:none;

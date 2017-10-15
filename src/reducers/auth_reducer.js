@@ -1,5 +1,5 @@
 import {
-  AUTH_USER, UNAUTH_USER, GET_POLLS, GET_POLL, VOTE_POLL, ANON_USER, DELETE_POLL
+  AUTH_USER, UNAUTH_USER, CREATE_POLL, GET_POLLS, GET_POLL, VOTE_POLL, ANON_USER, DELETE_POLL
 } from '../actions/types'
 
 export default function(state = {}, action){
