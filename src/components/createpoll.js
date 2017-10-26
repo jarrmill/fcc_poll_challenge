@@ -21,7 +21,6 @@ class CreatePoll extends Component {
   }
 
   handleSubmit = (event) => {
-    console.log("handling submit");
    var email = (this.props.auth.email) ? this.props.auth.email : " ";
    var value = this.state.value.slice();
    var options = [];

@@ -7,3 +7,4 @@ export const ANON_USER = 'anon_user';
 export const USER_POLLS = 'user_polls';
 export const DELETE_POLL = 'delete_poll';
 export const CREATE_POLL = 'create_poll';
+export const ADD_OPTION = 'add_option';

@@ -1,11 +1,12 @@
-import {
-  AUTH_USER, UNAUTH_USER, CREATE_POLL, GET_POLLS, GET_POLL, VOTE_POLL, ANON_USER, DELETE_POLL
-} from '../actions/types'
+import * as types from '../actions/types';
+
 
 export default function(state = {}, action){
   switch(action.type) {
-    case VOTE_POLL:
-    case GET_POLL:
+    case types.VOTE_POLL:
+      console.log("Vote case, payload: ", action.payload);
+      return Object.assign({}, state, {focuspoll: action.payload});
+    case types.GET_POLL:
       return Object.assign({}, state, {focuspoll: action.payload});
     default:
       return state;

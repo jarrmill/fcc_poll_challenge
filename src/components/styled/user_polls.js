@@ -63,3 +63,15 @@ export const PollButton = styled.button`
     transform: translate(0px, 1px);
   }
 `
+export const AddNewButton = styled.button`
+  border: dashed 5px #aaa;
+  display: flex;
+  box-sizing: border-box;
+  padding: 10px;
+  height: 95%;
+  width: 95%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: #ccc;
+`

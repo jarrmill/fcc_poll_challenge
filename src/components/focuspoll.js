@@ -1,49 +1,12 @@
+import {DaFocusPoll, PollContainer, PollTitle, DaContainer} from './styled/styled_focus_poll.js';
+import {ButtonContainer, Button, DaOptionBar} from './styled/styled_focus_poll.js';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import _ from 'lodash';
-import styled from "styled-components"
-import {Doughnut} from 'react-chartjs-2';
-import grid from '../assets/img/grid.png';
+import { Doughnut } from 'react-chartjs-2';
+import OptionBar from './addcomment';
 
-const DaFocusPoll = styled.ul`
-  display: flex;
-  flex-direction: column;
-  margin: 5px;
-  padding: 10px;
-  height: 90%;
-  width: 90%;
-  background-image: url(${grid});
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 600px){
-    margin: 0px;
-    display: block;
-    width: 100%;
-    background-color: #ddd;
-  }
-`
-const DaContainer= styled.div`
-  display: flex;
-  justify-content: center;
-`
-const Button = styled.button`
-  display: flex;
-  height: 30px;
-  width: 200px;
-  margin: 5px;
-  border: none;
-  font-family: sans-serif;
-  text-decoration: none;
-  text-align: center;
-  justify-content: center;
-  width: 80px;
-  &: hover {
-    background-color: #005f5f;
-    text-decoration:none;
-  }
-`
 class FocusPoll extends Component {
   constructor(props) {
     super(props);
@@ -51,9 +14,13 @@ class FocusPoll extends Component {
     this.state = {
       errorMessage : ''
     };
+    this.optionsHandleSubmit = this.optionsHandleSubmit.bind(this);
   }
   componentWillMount(){
-
+    if(this.props.focuspoll){
+      this.renderfocusPoll();
+    }
+    console.log("Polls: ", this.props.polls);
   }
   componentWillReceiveProps(nextProps){
     //nothing here yet, was for debugging state changes
@@ -75,24 +42,30 @@ class FocusPoll extends Component {
             datasets: [{
               data: dataArray,
               backgroundColor: [
-                  '#1C2321',
-                  '#7D98A1',
-                  '#5E6572',
-                  '#A9B4C2',
-                  '#EEF1EF',
+                  '#99b899',
+                  '#bbdabb',
+                  '#feceab',
+                  '#ffefcd',
+                  '#ff847c',
+                  '#e84a5f',
+                  '#2a363b',
+                  '#4c585d',
               ]
             }],
             labels: labelArray,
         }
-        console.log(dataArray, labelArray);
-        console.log("Data: ", data);
-        return (<Doughnut data={data} getElementAtEvent={(elems) => {this.handleVote(elems)}} />);
+        return (<PollContainer>
+          <PollTitle>{poll.focuspoll.title}</PollTitle>
+            <Doughnut
+              data={data}
+              getElementAtEvent={(elems) => {this.handleVote(elems)}} />
+          </PollContainer>);
         }
     return <div>Loading...</div>;
   }
   handleVote(elems){
-    console.log("Index: ", elems[0]._index);
     const voteKey =  this.props.poll.focuspoll.options[elems[0]._index].x
+    console.log('voting for ', voteKey);
     this.vote(voteKey);
   }
   renderOptions(){
@@ -117,15 +90,34 @@ class FocusPoll extends Component {
   renderError(){
     switch(this.state.errorMessage){
       case "anonVote":
-        return (<div>Please sign up or sign in to enable voting)</div>);
+        return (<div>Please sign up or sign in to enable voting</div>);
     }
   }
-
+  optionsHandleSubmit = (newOption) => {
+    var thispoll = this.props.poll.focuspoll;
+    var newOptions = thispoll.options.slice();
+    var email  = this.props.email;
+    //pollId, newOptions, voter, voter_list
+    if(this.props.authenticated == true){
+      if (newOption !== ''){
+       newOptions.push({x:newOption, y: 1});
+       this.props.addOption(thispoll._id, newOptions, email, thispoll.voters);
+       this.props.getSpecificPoll(thispoll._id);
+      }
+    }else{
+      console.log("Please sign in to enable this feature");
+      //add error code here (aka implement error action you lazy fuck)
+    }
+  }
   vote(voteKey){
     var email = this.props.email;
     var poll = this.props.poll.focuspoll;
     var voter_list = poll.voters;
-    console.log("This is the voteKey", voteKey);
+    console.log("Email: ", email);
+    console.log(voter_list);
+    if(voter_list.indexOf(email) !== -1){
+      console.log("WOOP WOOP CHEATER ALERT! WEEEWOOO MUTHAFUCKA");
+    }
     if(this.props.authenticated){
       this.props.vote(poll._id, voteKey, email, voter_list);
     }else{
@@ -134,10 +126,18 @@ class FocusPoll extends Component {
   }
   render() {
     return (
-      <DaFocusPoll>
-        {this.renderfocusPoll()}
-        {this.renderError()}
-      </DaFocusPoll>
+      <DaContainer>
+        <DaFocusPoll>
+          {this.renderfocusPoll()}
+          {this.renderError()}
+        </DaFocusPoll>
+        <ButtonContainer>
+          {this.renderOptions()}
+          <DaOptionBar>
+            <OptionBar submitFunction={this.optionsHandleSubmit} />
+          </DaOptionBar>
+        </ButtonContainer>
+      </DaContainer>
     );
   }
 }

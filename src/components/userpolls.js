@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
 import {MainContainer, PollDiv, PollBody, PollTitle, MainDisplay, PollsContainer} from './styled/user_polls.js';
-import {PollButton, PollContainer} from './styled/user_polls.js'
-import _ from 'lodash';
+import {PollButton, PollContainer, AddNewButton} from './styled/user_polls.js'
 import {Doughnut} from 'react-chartjs-2';
+import * as actions from '../actions';
+import _ from 'lodash';
 
 class PersonalPollList extends Component {
   constructor(props){
     super(props);
-    this.state = { title: '', data: [], display: 'none'};
+    this.state = { title: null, data: [], display: 'none'};
   }
   deletePoll(id, title){
     this.props.deletePoll(id);

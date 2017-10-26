@@ -52,12 +52,12 @@ export const RemoveButton = styled.input`
   font-weight: bold;
   float: right;
   border: none;
-  background-color: red;
+  background-color: #e74c3c;
   color: white;
   margin: 0px;
 
   &:hover{
-    background-color: maroon;
+    background-color: #c0392b;
   }
 `
 export const ButtonRow = styled.div`

@@ -9,22 +9,24 @@ const PollItem = styled.li`
   font-family: sans-serif;
   color: #1C2321;
   border-bottom: 2px solid #eee;
+  border-left: 2px solid: #eee;
   text-decoration: none;
   background-color: #fff;
   align-items: center;
   margin-bottom: 5px;
-  padding-left: 5px;
-  height: 70px;
+  padding-left: 15px;
+  height: 72px;
   width: 100%;
   &: hover {
     text-decoration:none;
-    border-bottom: 2px solid #389B9A;
+    border-bottom: 2px solid #ffc266;
   }
 `
 const ListOfPolls = styled.ul`
   list-style: none;
   padding-left: 0px;
-  width: 30%;
+  padding-top: 5px;
+  width: 33%;
 
   @media (max-width: 600px){
     height: auto;
@@ -45,6 +47,17 @@ class PollList extends Component {
   }
   componentWillMount(){
     this.props.getPolls();
+
+  }
+  componentWillReceiveProps(nextProps){
+    if(!this.props.polls){
+      console.log("No focus poll selected");
+      console.log("Suggesting poll: ", nextProps.polls[0]);
+      this.selectPoll(nextProps.polls[0]._id);
+    }else{
+      console.log("Polls already in place");
+      console.log("Carrying on as usual");
+    }
   }
   render() {
     return (

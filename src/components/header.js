@@ -18,12 +18,15 @@ const Hul = styled.ul`
   text-align: center;
   padding: 0;
   margin: 0;
+  @media (max-width: 600px){
+    flex-direction: column;
+  }
 `
 const Hli = styled.li`
   display: block;
   font-family: sans-serif;
   line-height: 40px;
-  height: 40px;
+  width: 100%;
   border-bottom: 1px solid #888;
 
   @media (min-width: 600px){
@@ -60,6 +63,11 @@ const Hdiv = styled.div`
   align-items:center;
   padding-left: 10px;
   padding-right: 10px;
+  @media (max-width: 600px){
+    width: 100%;
+    flex-direction: column;
+    background-color: #666;
+  }
 `
 
 class Header extends Component {

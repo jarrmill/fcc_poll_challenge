@@ -1,15 +1,11 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 
-import {AUTH_USER, UNAUTH_USER, GET_POLLS, GET_POLL, CREATE_POLL, VOTE_POLL, ANON_USER, ERROR, USER_POLLS, DELETE_POLL} from './types';
+import {AUTH_USER, UNAUTH_USER, GET_POLLS, GET_POLL, CREATE_POLL, VOTE_POLL, ANON_USER, ERROR, USER_POLLS, DELETE_POLL, ADD_OPTION} from './types';
 var twitterAPI = require('node-twitter-api');
 
-const ROOT_URL = 'https://pacific-scrubland-65914.herokuapp.com'; //3090
-var twitter = new twitterAPI({
-  consumerKey: 'dEr2AkrDLJSdDZfjqiLAzFkRz',
-  consumerSecret: 'JI7E8cfjSWNdKFFEoX1lMLoJB3ENdxQz1VpXfg6gbLQnfx8HVT',
-  callback: 'https://jsfccpoll.herokuapp.com/home'
-});
+//const ROOT_URL = 'https://pacific-scrubland-65914.herokuapp.com'; //3090
+const ROOT_URL = 'http://localhost:5000';
 
 export function signinUser({email, password}) {
   const userEmail = {email, password}.email;
@@ -59,17 +55,41 @@ export function vote(pollId, vote, userEmail, voter_list){
   return function(dispatch){
     if(voter_list.indexOf(userEmail) !== -1){
       console.log("WEEWOO CHEATER ALERT! WEEWOO");
+      return {type: VOTE_POLL, payload: null};
     }
-
     axios.post(`${ROOT_URL}/vote`,
       {id: pollId,
        vote: vote,
        email: userEmail}).then(response => {
+
        dispatch({type: VOTE_POLL, payload: response.data});
 
     }).catch((error) => {
       console.error(error);
     })
+    // return {type: VOTE_POLL, payload: poll}; /*{newPoll: poll, foo: randNum}*/
+  }
+}
+export function addOption(pollId, newOptions, voter, voter_list){
+  if(!pollId || !newOptions || !voter || !voter_list){
+    console.log("AddOption - not all arguments supplied");
+    console.log(pollId, newOptions, voter, voter_list);
+    return {type:VOTE_POLL, payload: null};
+  }
+  return function(dispatch){
+    if(voter_list.indexOf(voter) !== -1){
+      console.log("You have already voted, sorry!");
+      return {type: VOTE_POLL, payload: null};
+    }
+    axios.post(`${ROOT_URL}/newoption`,
+      {id: pollId,
+       options: newOptions,
+       voter: voter}).then(response => {
+         console.log("New Option Request Sent");
+         return {type: ADD_OPTION}
+       }).catch((error) => {
+         console.error(error);
+       });
     // return {type: VOTE_POLL, payload: poll}; /*{newPoll: poll, foo: randNum}*/
   }
 }
@@ -99,7 +119,6 @@ export function getUserPolls(email){
   var polls = axios.get(`${ROOT_URL}/listuserpolls`, {headers: {email}}).then(response => {
     return response.data;
   }).catch((error) => { console.error(error)});
-  console.log("sending payload: ", polls)
   return {type: USER_POLLS, payload: polls};
 }
 export function createPoll(newPoll){
