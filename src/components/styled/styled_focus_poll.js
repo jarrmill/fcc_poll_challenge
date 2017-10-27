@@ -6,7 +6,8 @@ export const DaFocusPoll = styled.ul`
   flex-direction: column;
   margin: 0px;
   padding: 5px;
-  width: 95%;
+  width: 100%;
+  height: 100vh;
   box-sizing: border-box;
   background-image: url(${grid});
   justify-content: flex-start;
@@ -19,11 +20,11 @@ export const DaFocusPoll = styled.ul`
     background-color: #ddd;
   }
   @media (min-width: 601px){
-    height: 50
+    height: 100%
   }
 `
 export const PollContainer = styled.div`
-  width: 100%;
+  width: 65vw;
   @media (min-width: 600px){
 
   }
@@ -31,6 +32,7 @@ export const PollContainer = styled.div`
 export const PollTitle = styled.h1`
   font-family: sans-serif;
   text-align: center;
+  color: #444;
 `
 export const DaContainer= styled.div`
   display: flex;
@@ -42,39 +44,45 @@ export const DaContainer= styled.div`
 `
 export const ButtonContainer = styled.div`
   display: flex;
-  width: 95%;
+  flex:auto;
   height: 30%;
+  background-color:#999;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-top: 10px;
-  border-top: solid gray 5px;
+  margin-left: 3px;
+  border-top: solid #aaa 5px;
   justify-content: center;
-  flex-direction: column;
+  flex-flow: row wrap;
 `
 export const Button = styled.button`
   display: flex;
-  flex: 1 1 auto;
-  width: 40%;
+  width: 250px;
+  height: 40px;
   margin: 5px;
   border: none;
   font-family: sans-serif;
   text-decoration: none;
   text-align: center;
   justify-content: center;
+  transition: background-color .3s ease-out;
   &: hover {
-    background-color: #005f5f;
+    background-color: #555;
+    color: white;
     text-decoration:none;
   }
 `
 export const DaOptionBar = styled.div`
   display: flex;
-  flex: 1 1 auto;
-  width: 40%;
-  background-color: #fee;
+  width: 250px;
+  height: 40px;
   margin: 5px;
 `
 export const OptionInput = styled.input`
   border: none;
   box-sizing: border-box;
-  width: 70%;
+  height: 40px;
+  width: 200px;
   &: focus{
     border-style:none;
     outline: none;
@@ -83,8 +91,9 @@ export const OptionInput = styled.input`
   }
 `
 export const OptionButton = styled.button`
-  height: 30px;
-  width: 40px;
+  height: 40px;
+  width: 50px;
+  flex: 4 4 auto;
   box-sizing: border-box;
   font-weight: bold;
   float: right;

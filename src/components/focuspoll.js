@@ -42,14 +42,14 @@ class FocusPoll extends Component {
             datasets: [{
               data: dataArray,
               backgroundColor: [
-                  '#99b899',
-                  '#bbdabb',
-                  '#feceab',
-                  '#ffefcd',
-                  '#ff847c',
-                  '#e84a5f',
-                  '#2a363b',
-                  '#4c585d',
+                  '#90cbdd',
+                  '#70a9bb',
+                  '#36c5bb',
+                  '#14a399',
+                  '#0491aa',
+                  '#008197',
+                  '#0091c1',
+                  '#0060a0',
               ]
             }],
             labels: labelArray,
@@ -64,6 +64,11 @@ class FocusPoll extends Component {
     return <div>Loading...</div>;
   }
   handleVote(elems){
+    //if you click in the middle of the chart it will call this function.
+    //this if statement is just stopping that from happening.
+    if (!elems[0]){
+      return null;
+    }
     const voteKey =  this.props.poll.focuspoll.options[elems[0]._index].x
     console.log('voting for ', voteKey);
     this.vote(voteKey);

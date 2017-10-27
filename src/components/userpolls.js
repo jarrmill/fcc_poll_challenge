@@ -11,11 +11,19 @@ class PersonalPollList extends Component {
     super(props);
     this.state = { title: null, data: [], display: 'none'};
   }
+  componentWillMount(){
+    //this.props.getPolls();
+    this.props.getUserPolls(this.props.email);
+  }
   deletePoll(id, title){
     this.props.deletePoll(id);
     this.props.getUserPolls(this.props.email);
   }
   renderFocusPoll(){
+    if (!this.props.polls){
+      console.log("No polls found for user");
+      return (<h1>Sorry buddy</h1>);
+    }
     var title = this.state.title;
     var data = this.state.data;
     var display = this.state.display;
@@ -74,11 +82,12 @@ class PersonalPollList extends Component {
           }],
           labels: labelArray
       }
-      return (<PollDiv>
+      return (
+        <PollDiv>
           <PollBody onClick={() => this.selectPoll(poll.title, data)}>
             <Doughnut data={data} options={options}/>
             <PollTitle>{poll.title}</PollTitle>
-            <PollButton onClick={() => this.deletePoll(poll._id, poll.title)}>DeletePoll</PollButton>
+            <PollButton onClick={() => this.deletePoll(poll._id, poll.title)}>Delete</PollButton>
           </PollBody>
         </PollDiv>);
     });
@@ -86,19 +95,21 @@ class PersonalPollList extends Component {
   selectPoll(title, data){
     this.setState({title: title, data: data, display: '0px'});
   }
-  componentWillMount(){
-    //this.props.getPolls();
-    this.props.getUserPolls(this.props.email);
-  }
   render() {
-    return (
-      <MainContainer>
-          {this.renderFocusPoll()}
-        <PollsContainer>
-          {this.renderList()}
-        </PollsContainer>
-      </MainContainer>
-    );
+    if(this.props.polls){
+      return (
+        <MainContainer>
+            {this.renderFocusPoll()}
+          <PollsContainer>
+            {this.renderList()}
+          </PollsContainer>
+        </MainContainer>
+      );
+    } else{
+      return (
+        <h1> Loading... </h1>
+      )
+    }
   }
 }
 

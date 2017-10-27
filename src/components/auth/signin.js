@@ -27,7 +27,6 @@ class Signin extends Component {
     var password = this.state.password;
     evt.preventDefault();
     this.props.signinUser({email, password});
-    alert(`Signing up under email: ${this.state.email}`);
   }
   render() {
     return (

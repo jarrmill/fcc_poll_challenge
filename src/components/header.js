@@ -13,8 +13,10 @@ const Himg = styled.img`
 const Hul = styled.ul`
   display: flex;
   justify-content: space-between;
+  border-bottom: #555 solid 4px;
+  box-sizing: border-box;
   list-style: none;
-  background-color: #444;
+  background-color: #555;
   text-align: center;
   padding: 0;
   margin: 0;
@@ -38,7 +40,26 @@ const Hli = styled.li`
     display: inline-block;
     margin-right: -4px;
   }
+`
+const HLinkSmall = styled(Link)`
+  text-decoration: none;
+  font-size: 80%;
+  color: #fff;
+  display: block;
+  border-bottom: #555 solid 4px;
+  box-sizing: border-box;
+  transition: .3s background-color;
 
+  &: hover {
+    text-decoration: none;
+    border-bottom: #abc solid 4px;
+  }
+
+  &: active {
+    text-decoration: none;
+    border-bottom: #abc solid 4px;
+    cursor: default;
+  }
 `
 const HLink = styled(Link)`
   text-decoration: none;
@@ -47,14 +68,14 @@ const HLink = styled(Link)`
   transition: .3s background-color;
 
   &: hover {
-    background-color: #005f5f;
-    color: #fff;
+    text-decoration: none;
+    border-bottom: #abc solid 4px;
     text-decoration: none;
   }
 
   &: active {
-    background-color: #fff;
-    color: #444;
+    text-decoration: none;
+    border-bottom: #abc solid 4px;
     cursor: default;
   }
 `
@@ -64,9 +85,10 @@ const Hdiv = styled.div`
   padding-left: 10px;
   padding-right: 10px;
   @media (max-width: 600px){
+    margin: 0;
+    padding: 0;
     width: 100%;
     flex-direction: column;
-    background-color: #666;
   }
 `
 
@@ -77,9 +99,9 @@ class Header extends Component {
         <Hdiv>
           <Himg src={require('../assets/img/magic_boi.png')} />
           <Hli><HLink to="/home">Vote Magic</HLink></Hli>
-          <Hli><HLink to="/createpoll">New Poll</HLink></Hli>
-          <Hli><HLink to="/userpolls">Your Polls</HLink></Hli>
-          <Hli><HLink to="/home">Home</HLink></Hli>
+          <Hli><HLinkSmall to="/createpoll">New Poll</HLinkSmall></Hli>
+          <Hli><HLinkSmall to="/userpolls">Your Polls</HLinkSmall></Hli>
+          <Hli><HLinkSmall to="/home">Home</HLinkSmall></Hli>
         </Hdiv>,
         <Hdiv>
           <Hli><HLink to="/signout">Sign Out</HLink></Hli>
@@ -89,11 +111,11 @@ class Header extends Component {
         <Hdiv>
           <Himg src={require('../assets/img/magic_boi.png')}/>
           <Hli key={4}><HLink to="/home">Vote Magic</HLink></Hli>
-          <Hli key={2}><HLink to="/home">All Polls</HLink></Hli>
+          <Hli key={2}><HLinkSmall to="/home">All Polls</HLinkSmall></Hli>
         </Hdiv>,
         <Hdiv>
-          <Hli><HLink to="/signin">Sign In</HLink></Hli>,
-          <Hli><HLink to="/signup">Sign Up</HLink></Hli>
+          <Hli><HLinkSmall to="/signin">Sign In</HLinkSmall></Hli>
+          <Hli><HLinkSmall to="/signup">Sign Up</HLinkSmall></Hli>
         </Hdiv>
       ]
     }

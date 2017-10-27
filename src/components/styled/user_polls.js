@@ -31,6 +31,10 @@ export const PollDiv = styled.div`
   height: 350px;
   margin: 5px;
   border: solid 2px #eee;
+  @media (max-width: 600px){
+    font-size: 70%;
+    height: 30vh;
+  }
 `
 export const PollBody = styled.div`
   display: flex;
@@ -46,10 +50,11 @@ export const PollBody = styled.div`
 export const PollTitle = styled.h1`
   text-align: center;
   font-family: sans-serif;
+  font-size: 3vw;
 `
 export const PollButton = styled.button`
   height 50px;
-  width: 50%;
+  width: 70%;
   background-color: #ff4d4d;
   border: none;
   color: white;
@@ -61,6 +66,10 @@ export const PollButton = styled.button`
     border: none;
     box-shadow: 1px 0px 1px #363d47;
     transform: translate(0px, 1px);
+  }
+  @media (max-width: 600px){
+    height: 25px;
+    font-size: 70%;
   }
 `
 export const AddNewButton = styled.button`
