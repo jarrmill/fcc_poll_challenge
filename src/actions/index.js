@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import {AUTH_USER, UNAUTH_USER, GET_POLLS, GET_POLL, CREATE_POLL, VOTE_POLL, ANON_USER, ERROR, USER_POLLS, DELETE_POLL, ADD_OPTION} from './types';
 var twitterAPI = require('node-twitter-api');
 
-const ROOT_URL =  process.env.DB_PATH;
+const ROOT_URL =  process.env.REACT_APP_DB_PATH;
 if (!ROOT_URL) {console.log("ENV Problem. DB Directory not found.");}
 
 export function signinUser({email, password}) {
