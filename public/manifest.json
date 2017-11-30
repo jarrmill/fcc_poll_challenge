@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Vote Magic",
+  "name": "FCC's Voting Assignment",
   "icons": [
     {
       "src": "favicon.ico",
